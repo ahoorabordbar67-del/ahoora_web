@@ -1,337 +1,169 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+/* تنظیمات کلی و رنگ‌های مافیایی */
+:root {
+    --mafia-red: #bc0000;
+    --mafia-blue: #001a33;
+    --mafia-black: #050505;
+    --mafia-white: #e0e0e0;
+    --neon-glow: #ff0000;
 }
 
 body {
-    min-height: 100vh;
-    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    background-color: var(--mafia-black);
+    color: white;
+    font-family: 'Impact', sans-serif; /* فونت سنگین و مافیایی */
     overflow: hidden;
-    background: #020207;
-}
-
-.background {
-    min-height: 100vh;
-    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    overflow: hidden;
-
-    background:
-        radial-gradient(circle at 20% 30%, rgba(50, 0, 255, 0.28), transparent 30%),
-        radial-gradient(circle at 80% 20%, rgba(0, 100, 255, 0.22), transparent 30%),
-        radial-gradient(circle at 50% 90%, rgba(120, 0, 255, 0.25), transparent 35%),
-        #020207;
 }
 
-/* Animated background lights */
+/* --- پس زمینه گرافیکی متحرک (بدون ویدیو) --- */
+.bg-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+    background: radial-gradient(circle at center, #1a1a1a 0%, #000 100%);
+}
 
-.orb {
+.gradient-sphere {
     position: absolute;
+    width: 600px;
+    height: 600px;
     border-radius: 50%;
-    filter: blur(90px);
-    animation: move 8s infinite alternate ease-in-out;
+    filter: blur(100px);
+    opacity: 0.4;
+    animation: moveSphere 20s infinite alternate;
 }
 
-.orb1 {
-    width: 350px;
-    height: 350px;
-    background: rgba(70, 0, 255, 0.35);
-    top: -100px;
-    left: -100px;
+.sphere-1 {
+    background: var(--mafia-red);
+    top: -10%;
+    left: -10%;
 }
 
-.orb2 {
-    width: 400px;
-    height: 400px;
-    background: rgba(0, 80, 255, 0.25);
-    right: -150px;
-    top: 100px;
-    animation-delay: 2s;
+.sphere-2 {
+    background: var(--mafia-blue);
+    bottom: -10%;
+    right: -10%;
+    animation-delay: -5s;
 }
 
-.orb3 {
-    width: 350px;
-    height: 350px;
-    background: rgba(120, 0, 255, 0.25);
-    bottom: -150px;
+.sphere-3 {
+    background: #333;
+    top: 40%;
     left: 40%;
-    animation-delay: 4s;
+    animation-duration: 15s;
 }
 
-@keyframes move {
-    0% {
-        transform: translate(0, 0) scale(1);
-    }
-
-    50% {
-        transform: translate(80px, -50px) scale(1.2);
-    }
-
-    100% {
-        transform: translate(-60px, 60px) scale(0.9);
-    }
+@keyframes moveSphere {
+    from { transform: translate(0, 0) scale(1); }
+    to { transform: translate(100px, 50px) scale(1.2); }
 }
 
-/* Main name */
-
-h1 {
-    position: relative;
-    z-index: 2;
-
-    font-size: clamp(40px, 8vw, 100px);
-    font-weight: 900;
-    letter-spacing: 8px;
-    text-align: center;
-
-    color: #4d0000;
-
-    text-shadow:
-        0 0 5px #ff0000,
-        0 0 15px #8b0000,
-        0 0 35px #500000,
-        0 0 70px #250000;
-
-    animation: nameGlow 2.5s infinite alternate;
+/* --- Canvas ذرات --- */
+#particleCanvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
 }
 
-@keyframes nameGlow {
-    from {
-        text-shadow:
-            0 0 5px #ff0000,
-            0 0 15px #8b0000,
-            0 0 30px #500000;
-    }
-
-    to {
-        text-shadow:
-            0 0 10px #ff0000,
-            0 0 30px #c00000,
-            0 0 60px #700000,
-            0 0 100px #350000;
-    }
-}
-
-.line {
-    width: 280px;
-    height: 3px;
-    margin: 15px 0 30px;
-
-    background: linear-gradient(
-        90deg,
-        transparent,
-        #ff0000,
-        #7200ff,
-        #0066ff,
-        transparent
-    );
-
-    box-shadow:
-        0 0 10px #ff0000,
-        0 0 25px #7200ff;
-}
-
-/* Login glass box */
-
-.login-box {
-    position: relative;
-    z-index: 3;
-
-    width: min(90%, 430px);
-    padding: 40px;
-
-    text-align: center;
-
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 25px;
-
-    background: rgba(255, 255, 255, 0.07);
-    backdrop-filter: blur(25px);
-    -webkit-backdrop-filter: blur(25px);
-
-    box-shadow:
-        0 0 30px rgba(0, 60, 255, 0.18),
-        0 0 60px rgba(100, 0, 255, 0.12),
-        inset 0 0 30px rgba(255, 255, 255, 0.03);
-}
-
-.lock {
-    font-size: 45px;
-    margin-bottom: 10px;
-
-    filter:
-        drop-shadow(0 0 10px #5b00ff)
-        drop-shadow(0 0 20px #0066ff);
-}
-
-.login-box h2 {
-    color: white;
-    font-size: 30px;
-    margin-bottom: 10px;
-}
-
-.login-box p {
-    color: #aaa;
-    margin-bottom: 25px;
-}
-
-/* Input */
-
-input {
-    width: 100%;
-    height: 55px;
-
-    padding: 0 20px;
-
-    border: 1px solid rgba(0, 110, 255, 0.5);
-    border-radius: 15px;
-
-    outline: none;
-
-    color: white;
-    font-size: 17px;
-
-    background: rgba(0, 0, 0, 0.35);
-
-    transition: 0.3s;
-}
-
-input::placeholder {
-    color: #777;
-}
-
-input:focus {
-    border-color: #7200ff;
-
-    box-shadow:
-        0 0 10px #0066ff,
-        0 0 25px rgba(114, 0, 255, 0.5);
-}
-
-/* Button */
-
-button {
-    width: 100%;
-    height: 55px;
-
-    margin-top: 18px;
-
-    border: none;
-    border-radius: 15px;
-
-    cursor: pointer;
-
-    color: white;
-    font-size: 18px;
-    font-weight: bold;
-
-    background: linear-gradient(
-        90deg,
-        #3c00ff,
-        #7200ff,
-        #004cff
-    );
-
-    box-shadow:
-        0 0 15px rgba(70, 0, 255, 0.5);
-
-    transition: 0.3s;
-}
-
-button:hover {
-    transform: translateY(-3px) scale(1.02);
-
-    box-shadow:
-        0 0 20px #4d00ff,
-        0 0 45px rgba(0, 100, 255, 0.5);
-}
-
-#error {
-    color: #ff3030;
-    margin-top: 15px;
-    margin-bottom: 0;
-}
-
-/* Result glass box */
-
-.result-box {
+/* --- هدر بسیار بزرگ و گرافیکی --- */
+.main-header {
     position: absolute;
-    z-index: 5;
+    top: 10%;
+    z-index: 10;
+}
 
-    width: min(90%, 430px);
-    padding: 35px;
+.mafia-title {
+    font-size: 100px; /* بسیار بزرگتر */
+    font-weight: 900;
+    letter-spacing: 15px;
+    color: #fff;
+    text-transform: uppercase;
+    /* افکت سایه نئونی بسیار سنگین و شیک */
+    text-shadow: 
+        0 0 10px #fff,
+        0 0 20px var(--mafia-red),
+        0 0 40px var(--mafia-red),
+        0 0 80px var(--mafia-red);
+    animation: titlePulse 4s infinite ease-in-out;
+}
 
-    text-align: center;
+@keyframes titlePulse {
+    0%, 100% { transform: scale(1); text-shadow: 0 0 10px #fff, 0 0 20px var(--mafia-red); }
+    50% { transform: scale(1.05); text-shadow: 0 0 20px #fff, 0 0 50px var(--mafia-red), 0 0 100px var(--mafia-red); }
+}
 
-    border: 1px solid rgba(120, 80, 255, 0.5);
-    border-radius: 25px;
+/* --- کارت‌های شیشه‌ای (Glassmorphism) --- */
+.container {
+    z-index: 10;
+}
 
-    background: rgba(20, 10, 40, 0.65);
+.glass-card {
+    background: rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(30px);
-
-    box-shadow:
-        0 0 30px rgba(90, 0, 255, 0.5),
-        0 0 80px rgba(0, 80, 255, 0.2);
-
-    opacity: 0;
-    transform: scale(0.5) translateY(30px);
-
-    pointer-events: none;
-
-    transition: 0.6s cubic-bezier(.17,.67,.3,1.4);
+    -webkit-backdrop-filter: blur(30px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 30px;
+    padding: 50px;
+    text-align: center;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.9);
 }
 
-.result-box.show {
-    opacity: 1;
-    transform: scale(1) translateY(0);
-    pointer-events: auto;
+.label-text {
+    font-size: 14px;
+    letter-spacing: 5px;
+    color: var(--mafia-red);
+    margin-bottom: 20px;
 }
 
-.phone-icon {
-    font-size: 50px;
-    color: #7d35ff;
-
-    text-shadow:
-        0 0 10px #7200ff,
-        0 0 30px #0066ff;
-
-    margin-bottom: 15px;
-}
-
-.result-box p {
-    color: #aaa;
-    margin-bottom: 10px;
-}
-
-.result-box strong {
-    display: block;
-
+.glass-input {
+    background: rgba(0, 0, 0, 0.7);
+    border: 1px solid var(--mafia-red);
+    padding: 15px;
+    border-radius: 12px;
     color: white;
-
-    font-size: 30px;
-    letter-spacing: 3px;
-
-    text-shadow:
-        0 0 10px #0066ff,
-        0 0 25px #7200ff;
+    font-size: 20px;
+    text-align: center;
+    width: 250px;
+    outline: none;
+    box-shadow: inset 0 0 10px rgba(255, 0, 0, 0.2);
 }
 
-/* Mobile */
+.action-btn {
+    display: block;
+    margin: 20px auto 0;
+    padding: 15px 40px;
+    background: var(--mafia-red);
+    border: none;
+    border-radius: 12px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 18px;
+    transition: 0.4s;
+}
 
-@media (max-width: 600px) {
+.action-btn:hover {
+    background: white;
+    color: black;
+    box-shadow: 0 0 30px white;
+}
 
-    h1 {
-        letter-spacing: 3px;
-    }
+.mafia-phone {
+    font-size: 50px;
+    color: #fff;
+    text-shadow: 0 0 20px var(--mafia-blue);
+}
 
-    .login-box {
-        padding: 30px 22px;
-    }
-
-    .result-box strong {
-        font-size: 24px;
-    }
+.hidden {
+    display: none;
 }

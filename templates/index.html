@@ -3,118 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AHURA | MAFIA EDITION</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>AHOORA BORDBAR</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <!-- پس زمینه گرافیکی متحرک -->
-    <div class="bg-wrapper">
-        <div class="gradient-sphere sphere-1"></div>
-        <div class="gradient-sphere sphere-2"></div>
-        <div class="gradient-sphere sphere-3"></div>
-    </div>
+    <div class="background">
+        <div class="orb orb1"></div>
+        <div class="orb orb2"></div>
+        <div class="orb orb3"></div>
 
-    <!-- ذرات معلق (Particles) -->
-    <canvas id="particleCanvas"></canvas>
+        <h1>AHOORA BORDBAR</h1>
+        <div class="line"></div>
 
-    <header class="main-header">
-        <h1 class="mafia-title">AHURA BARD BAR</h1>
-    </header>
+        <div class="login-box">
+            <div class="lock">🔐</div>
 
-    <div class="container">
-        <!-- بخش رمز عبور -->
-        <div id="passwordBox" class="glass-card">
-            <p class="label-text">MAFIA ACCESS CONTROL</p>
-            <input type="password" id="passInput" class="glass-input" placeholder="ENTER CODE">
-            <button onclick="checkPassword()" class="action-btn">UNLOCK</button>
+            <h2>ورود به سیستم</h2>
+            <p>رمز خود را وارد کنید</p>
+
+            <input type="password" id="password" placeholder="Password">
+
+            <button onclick="checkPassword()">ورود</button>
+
+            <p id="error"></p>
         </div>
 
-        <!-- بخش نمایش شماره بعد از ورود -->
-        <div id="phoneBox" class="glass-card hidden">
-            <p class="label-text">IDENTITY VERIFIED</p>
-            <h2 class="mafia-phone">09015120913</h2>
+        <div class="result-box" id="result">
+            <div class="phone-icon">☎</div>
+            <p>شماره تماس</p>
+            <strong>09015120913</strong>
         </div>
     </div>
 
     <script>
-        // تابع چک کردن رمز
         function checkPassword() {
-            const pass = document.getElementById('passInput').value;
-            if (pass === "1621389") {
-                document.getElementById('passwordBox').classList.add('hidden');
-                document.getElementById('phoneBox').classList.remove('hidden');
-                playSuccessSound();
+            let password = document.getElementById("password").value;
+            let result = document.getElementById("result");
+            let error = document.getElementById("error");
+
+            if (password === "1621389") {
+                result.classList.add("show");
+                error.textContent = "";
             } else {
-                alert("ACCESS DENIED!");
+                result.classList.remove("show");
+                error.textContent = "رمز اشتباه است!";
             }
         }
-
-        // افکت صوتی ساده
-        function playSuccessSound() {
-            const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            const oscillator = audioCtx.createOscillator();
-            const gainNode = audioCtx.createGain();
-            oscillator.connect(gainNode);
-            gainNode.connect(audioCtx.destination);
-            oscillator.type = 'sine';
-            oscillator.frequency.setValueAtTime(440, audioCtx.currentTime);
-            gainNode.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + 1);
-            oscillator.start();
-            oscillator.stop(audioCtx.currentTime + 1);
-        }
-
-        // ذرات معلق (Particles) برای گرافیک بالاتر
-        const canvas = document.getElementById('particleCanvas');
-        const ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-
-        let particlesArray = [];
-
-        class Particle {
-            constructor() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.size = Math.random() * 3 + 1;
-                this.speedX = Math.random() * 1 - 0.5;
-                this.speedY = Math.random() * 1 - 0.5;
-                this.color = Math.random() > 0.5 ? '#ff0000' : '#0033ff'; // قرمز یا آبی
-            }
-            update() {
-                this.x += this.speedX;
-                this.y += this.speedY;
-                if (this.size > 0.2) this.size -= 0.01;
-            }
-            draw() {
-                ctx.fillStyle = this.color;
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
-            }
-        }
-
-        function init() {
-            for (let i = 0; i < 100; i++) {
-                particlesArray.push(new Particle());
-            }
-        }
-
-        function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            for (let i = 0; i < particlesArray.length; i++) {
-                particlesArray[i].update();
-                particlesArray[i].draw();
-                if (particlesArray[i].size <= 0.2) {
-                    particlesArray.splice(i, 1);
-                    i--;
-                    particlesArray.push(new Particle());
-                }
-            }
-            requestAnimationFrame(animate);
-        }
-        init();
-        animate();
     </script>
+
 </body>
 </html>

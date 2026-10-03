@@ -1,0 +1,169 @@
+/* تنظیمات کلی و رنگ‌های مافیایی */
+:root {
+    --mafia-red: #bc0000;
+    --mafia-blue: #001a33;
+    --mafia-black: #050505;
+    --mafia-white: #e0e0e0;
+    --neon-glow: #ff0000;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    background-color: var(--mafia-black);
+    color: white;
+    font-family: 'Impact', sans-serif; /* فونت سنگین و مافیایی */
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* --- پس زمینه گرافیکی متحرک (بدون ویدیو) --- */
+.bg-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+    background: radial-gradient(circle at center, #1a1a1a 0%, #000 100%);
+}
+
+.gradient-sphere {
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    filter: blur(100px);
+    opacity: 0.4;
+    animation: moveSphere 20s infinite alternate;
+}
+
+.sphere-1 {
+    background: var(--mafia-red);
+    top: -10%;
+    left: -10%;
+}
+
+.sphere-2 {
+    background: var(--mafia-blue);
+    bottom: -10%;
+    right: -10%;
+    animation-delay: -5s;
+}
+
+.sphere-3 {
+    background: #333;
+    top: 40%;
+    left: 40%;
+    animation-duration: 15s;
+}
+
+@keyframes moveSphere {
+    from { transform: translate(0, 0) scale(1); }
+    to { transform: translate(100px, 50px) scale(1.2); }
+}
+
+/* --- Canvas ذرات --- */
+#particleCanvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+
+/* --- هدر بسیار بزرگ و گرافیکی --- */
+.main-header {
+    position: absolute;
+    top: 10%;
+    z-index: 10;
+}
+
+.mafia-title {
+    font-size: 100px; /* بسیار بزرگتر */
+    font-weight: 900;
+    letter-spacing: 15px;
+    color: #fff;
+    text-transform: uppercase;
+    /* افکت سایه نئونی بسیار سنگین و شیک */
+    text-shadow: 
+        0 0 10px #fff,
+        0 0 20px var(--mafia-red),
+        0 0 40px var(--mafia-red),
+        0 0 80px var(--mafia-red);
+    animation: titlePulse 4s infinite ease-in-out;
+}
+
+@keyframes titlePulse {
+    0%, 100% { transform: scale(1); text-shadow: 0 0 10px #fff, 0 0 20px var(--mafia-red); }
+    50% { transform: scale(1.05); text-shadow: 0 0 20px #fff, 0 0 50px var(--mafia-red), 0 0 100px var(--mafia-red); }
+}
+
+/* --- کارت‌های شیشه‌ای (Glassmorphism) --- */
+.container {
+    z-index: 10;
+}
+
+.glass-card {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 30px;
+    padding: 50px;
+    text-align: center;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.9);
+}
+
+.label-text {
+    font-size: 14px;
+    letter-spacing: 5px;
+    color: var(--mafia-red);
+    margin-bottom: 20px;
+}
+
+.glass-input {
+    background: rgba(0, 0, 0, 0.7);
+    border: 1px solid var(--mafia-red);
+    padding: 15px;
+    border-radius: 12px;
+    color: white;
+    font-size: 20px;
+    text-align: center;
+    width: 250px;
+    outline: none;
+    box-shadow: inset 0 0 10px rgba(255, 0, 0, 0.2);
+}
+
+.action-btn {
+    display: block;
+    margin: 20px auto 0;
+    padding: 15px 40px;
+    background: var(--mafia-red);
+    border: none;
+    border-radius: 12px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 18px;
+    transition: 0.4s;
+}
+
+.action-btn:hover {
+    background: white;
+    color: black;
+    box-shadow: 0 0 30px white;
+}
+
+.mafia-phone {
+    font-size: 50px;
+    color: #fff;
+    text-shadow: 0 0 20px var(--mafia-blue);
+}
+
+.hidden {
+    display: none;
+}

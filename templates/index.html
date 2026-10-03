@@ -3,7 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AHURA | MAFIA EDITION</title>
+    <title>AHOORA BORDBAR | MAFIA EDITION</title>
+    
+    <!-- لینک‌های فونت جدید برای استایل مافیایی لوکس -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Orbitron:wght@600;900&display=swap" rel="stylesheet">
+    
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
@@ -79,7 +85,7 @@
                 this.size = Math.random() * 3 + 1;
                 this.speedX = Math.random() * 1 - 0.5;
                 this.speedY = Math.random() * 1 - 0.5;
-                this.color = Math.random() > 0.5 ? '#ff0000' : '#0033ff'; // قرمز یا آبی
+                this.color = Math.random() > 0.5 ? '#ff0000' : '#0033ff';
             }
             update() {
                 this.x += this.speedX;
